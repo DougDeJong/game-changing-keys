@@ -3,6 +3,14 @@ document.getElementById("chords").loop = true;
 document.getElementById("beat").loop = true;
 console.log(document.getElementById("chords"));
 let canvas = document.querySelector("#canv");
+var audio_files = [
+  "audio/plucks/C pluck.wav",
+  "audio/plucks/D pluck.wav",
+  "audio/plucks/F pluck.wav",
+  "audio/plucks/G pluck.wav",
+  "audio/plucks/Bb pluck.wav",
+  "audio/plucks/C pluck.wav"
+];
 
 canvas.width = window.innerWidth;
 
@@ -21,7 +29,7 @@ class Game {
   }
   startGame() {
     document.getElementById("beat").play();
-    for (var i = 0; i < 16; i++) {
+    for (var i = 0; i < 32; i++) {
       const letter = {};
       setTimeout(() => {
         letter.x = Math.floor(Math.random() * 1340);
@@ -35,20 +43,19 @@ class Game {
 
         this.eventTracker.push(letter);
         this.guessOrder.push(letter);
-        console.log(this.guessOrder[0].value)
+        console.log(this.guessOrder[0].value);
         ctx.font = letter.fontType;
         ctx.fillStyle = "#ff0000";
         ctx.fillText(letter.value, letter.x, letter.y, 100, 100);
       }, 1200 * i);
     }
-        setTimeout(()=> {
-          if (this.eventTracker.length === this.correctAnswers.length){
-            alert('You WIN!')
-          }
-          else {
-            alert('Better Luck Next Time')
-          }
-        }, 19200)
+    setTimeout(() => {
+      if (this.eventTracker.length === this.correctAnswers.length) {
+        alert("You WIN!");
+      } else {
+        alert("Better Luck Next Time");
+      }
+    }, 38400);
   }
   pressKey(key) {
     if (
@@ -72,6 +79,12 @@ class Game {
           100
         );
         this.guessOrder.shift();
+        var random_file =
+          audio_files[Math.floor(Math.random() * audio_files.length)];
+
+        var pluck = new Audio(random_file);
+
+        pluck.play();
       }
     } else {
       console.log("not a valid input");
