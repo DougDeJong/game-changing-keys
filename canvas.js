@@ -1,5 +1,5 @@
-document.getElementById("chords").loop = true;
-document.getElementById("beat").loop = true;
+// audio arrays and declarations //
+
 console.log(document.getElementById("chords"));
 let canvas = document.querySelector("#canv");
 var audio_files = [
@@ -11,10 +11,16 @@ var audio_files = [
   "audio/plucks/C pluck.wav"
 ];
 
-canvas.width = window.innerWidth;
+// canvas declarations //
+canvas.width = 1425;
 
-canvas.height = window.innerHeight;
+canvas.height = window.innerHeight - 144;
 let ctx = canvas.getContext("2d");
+particlesCount = 20;
+particles = [];
+particlePos = {};
+
+// difficulty arrays //
 
 let randHomeRow = ["a", "s", "d", "f", "j", "k", "l", ";"];
 let fullKeyboard = [
@@ -49,7 +55,7 @@ let fullKeyboard = [
   "/",
   ";"
 ];
-
+// Game Constructor Function //
 class Game {
   constructor(difficultyArray, interval, amount) {
     this.difficulty = difficultyArray;
@@ -87,10 +93,12 @@ class Game {
         alert("You WIN!");
         var buttons = document.getElementById("button-3");
         buttons.style.display = "flex";
+        document.getElementById("beats").stop();
       } else {
         alert("Better Luck Next Time");
         var buttons = document.getElementById("button-3");
         buttons.style.display = "flex";
+        document.getElementById("beats").stop();
       }
     }, 38400);
   }
@@ -115,6 +123,8 @@ class Game {
           100,
           100
         );
+        particlePos.x = this.guessOrder[0].x;
+        particlePos.y = this.guessOrder[0].y;
         this.guessOrder.shift();
         var random_file =
           audio_files[Math.floor(Math.random() * audio_files.length)];
@@ -129,16 +139,13 @@ class Game {
   }
 }
 
-// let randFonts = ["48px Arial", "36px Courier", "24px Helvetica"];
-// let randX = Math.floor(Math.random() * 1440);
-// let randY = Math.floor(Math.random() * 736);
-// let eventTracker = [];
+// Difficulty Button Actions //
 
 startButton = document.getElementById("start-game-easy");
 startButton.onclick = function() {
   var buttons = document.getElementById("button-3");
   buttons.style.display = "none";
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   setTimeout(() => {
     document.getElementById("chords").play();
     changingKeys = new Game(randHomeRow, 1200, 32);
@@ -149,7 +156,7 @@ startButtonMedium = document.getElementById("start-game-medium");
 startButtonMedium.onclick = function() {
   var buttons = document.getElementById("button-3");
   buttons.style.display = "none";
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   setTimeout(() => {
     document.getElementById("chords").play();
     changingKeys = new Game(fullKeyboard, 1200, 32);
@@ -160,7 +167,7 @@ startButtonHard = document.getElementById("start-game-hard");
 startButtonHard.onclick = function() {
   var buttons = document.getElementById("button-3");
   buttons.style.display = "none";
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   setTimeout(() => {
     document.getElementById("chords").play();
     changingKeys = new Game(fullKeyboard, 600, 64);
@@ -168,108 +175,12 @@ startButtonHard.onclick = function() {
   }, 100);
 };
 
+// Window Key Detections //
 
 window.onkeydown = function(e) {
   changingKeys.pressKey(e);
 };
 
-//   for (var i = 0; i < 16; i++) {
-//     const letter = {};
-//     setTimeout(() => {
-//       letter.x = Math.floor(Math.random() * 1340);
-//       letter.y = Math.floor(Math.random() * 636);
-//       letter.fontType = randFonts[Math.floor(Math.random() * randFonts.length)];
-//       letter.value =
-//         randHomeRow[Math.floor(Math.random() * randHomeRow.length)];
+window.onload = function(){
 
-//       eventTracker.push(letter);
-//       console.log(eventTracker);
-//       ctx.font = letter.fontType;
-//       ctx.fillText(letter.value, letter.x, letter.y, 100, 100);
-//     }, 600 * i);
-//   }
-// };
-// checkIfLetter(blah) {
-//   if (blah.keyCode >= 65 && blah.keyCode <= 90) {
-//     console.log("That was a letter!");
-//     this.checkClickedLetters(blah);
-//   } else {
-//     console.log("Try a letter instead");
-//   }
-//   console.log(this.errorsLeft);
-// }
-
-// setTimeout(() => {
-//   ctx.font = randFonts[Math.floor(Math.random()*randFonts.length)];
-//   ctx.fillText(randHomeRow[Math.floor(Math.random()*randHomeRow.length)] , Math.floor(Math.random()*1340), Math.floor(Math.random()*636), 100, 100);
-// }, 1200);
-// setTimeout(() => {
-//   ctx.font = randFonts[Math.floor(Math.random()*randFonts.length)];
-//   ctx.fillText(randHomeRow[Math.floor(Math.random()*randHomeRow.length)] , Math.floor(Math.random()*1340), Math.floor(Math.random()*636), 100, 100);
-// }, 1800);
-// setTimeout(() => {
-//   ctx.font = randFonts[Math.floor(Math.random()*randFonts.length)];
-//   ctx.fillText(randHomeRow[Math.floor(Math.random()*randHomeRow.length)] , Math.floor(Math.random()*1340), Math.floor(Math.random()*636), 100, 100);
-// }, 2400);
-//   setTimeout(() => {
-//     ctx.fillStyle = "#95b7ed";
-//     ctx.fillRect(400, 100, 100, 100);
-//   }, 3600);
-//   setTimeout(() => {
-//     ctx.fillStyle = "#95b7ed";
-//     ctx.fillRect(500, 200, 100, 100);
-//   }, 4200);
-//   setTimeout(() => {
-//     ctx.fillStyle = "#95b7ed";
-//     ctx.fillRect(600, 300, 100, 100);
-//   }, 4800);
-//   setTimeout(() => {
-//     ctx.fillStyle = "#95b7ed";
-//     ctx.fillRect(400, 400, 100, 100);
-//     document.getElementById("2button").innerHTML =
-//       '<button id="buttonBeat">Needs a Beat</button>';
-//     beatButton = document.getElementById("buttonBeat");
-//     console.log(beatButton);
-//     beatButton.onclick = function() {
-//       console.log("what a life");
-//       document.getElementById("chords").loop = false;
-//       document.getElementById("chords").onended = function() {
-//         document.getElementById("beat").play();
-//       };
-//     };
-//   }, 6000);
-//   setTimeout(() => {
-//     ctx.fillStyle = "#f4bf42";
-//     ctx.fillRect(600, 400, 100, 100);
-//   }, 6600);
-
-//   setTimeout(() => {
-//     ctx.fillStyle = "#f4bf42";
-//     ctx.fillRect(750, 400, 100, 100);
-//   }, 7200);
-
-//   setTimeout(() => {
-//     ctx.fillStyle = "#f441d0";
-//     ctx.fillRect(900, 250, 100, 100);
-//   }, 8400);
-
-//   setTimeout(() => {
-//     ctx.fillStyle = "#f441d0";
-//     ctx.fillRect(900, 100, 100, 100);
-//   }, 9000);
-
-//   setTimeout(() => {
-//     // document.getElementById("chords").scrollTop();
-//   }, 9600);
-// };
-
-// beatButton = document.getElementById("buttonBeat");
-// beatButton.onclick(function () {
-//   console.log("what a life");
-//     document.getElementById("chords").loop = false;
-//     document.getElementById("chords").onended = function() {
-//       document.getElementById("beat").play();
-//     };
-//   }
-
-// );
+}

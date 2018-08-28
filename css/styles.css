@@ -1,23 +1,34 @@
 canvas {
   border: 1px solid black;
-  background: whitesmoke;
+  background-image: url("../img/trebleClef.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 body {
   margin: 0 auto;
 }
 
 .game-container {
-  position:fixed;
-  height: 100%
+  position:absolute;
+  margin: 0 auto;
 
+}
+
+#changing-keys {
+  height: 10vw;
+}
+
+#title {
+  display:flex;
+  justify-content: center;
 }
 
 #button-3 {
   display: flex;
   justify-content: space-around;
-  top: 20vw;
+  top: 30vw;
   margin-left: 10vw;
-  margin-top: 10vw;
+  margin-top: 9vw;
 }
 
 .green-button {
