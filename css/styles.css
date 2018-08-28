@@ -12,7 +12,7 @@ body {
 
 }
 
-.button-3 {
+#button-3 {
   display: flex;
   justify-content: space-around;
   top: 20vw;
