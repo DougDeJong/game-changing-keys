@@ -1,7 +1,6 @@
 // audio arrays and declarations //
 
 console.log(document.getElementById("chords"));
-let canvas = document.querySelector("#canv");
 var audio_files = [
   "audio/plucks/C pluck.wav",
   "audio/plucks/D pluck.wav",
@@ -12,13 +11,15 @@ var audio_files = [
 ];
 
 // canvas declarations //
-canvas.width = 1425;
 
-canvas.height = window.innerHeight - 144;
-let ctx = canvas.getContext("2d");
-particlesCount = 20;
-particles = [];
-particlePos = {};
+class Canvas {
+  constructor(){
+    this.canvas = document.querySelector("#canv");
+    this.canvas.width = 1425;
+    this.canvas.height = (window.innerHeight - 144);
+    this.ctx = this.canvas.getContext("2d");
+  }
+}
 
 // difficulty arrays //
 
@@ -83,9 +84,9 @@ class Game {
         this.eventTracker.push(letter);
         this.guessOrder.push(letter);
         console.log(this.guessOrder[0].value);
-        ctx.font = letter.fontType;
-        ctx.fillStyle = "#ff0000";
-        ctx.fillText(letter.value, letter.x, letter.y, 100, 100);
+        keyCanvas.ctx.font = letter.fontType;
+        keyCanvas.ctx.fillStyle = "#ff0000";
+        keyCanvas.ctx.fillText(letter.value, letter.x, letter.y, 100, 100);
       }, this.popInterval * i);
     }
     setTimeout(() => {
@@ -114,17 +115,15 @@ class Game {
         console.log(this.guessOrder);
         this.correctAnswers.push(key.key);
         console.log(this.correctAnswers);
-        ctx.font = this.guessOrder[0].fontType;
-        ctx.fillStyle = "#f5f5f5";
-        ctx.fillText(
+        keyCanvas.ctx.font = this.guessOrder[0].fontType;
+        keyCanvas.ctx.fillStyle = "#f5f5f5";
+        keyCanvas.ctx.fillText(
           this.guessOrder[0].value,
           this.guessOrder[0].x,
           this.guessOrder[0].y,
           100,
           100
         );
-        particlePos.x = this.guessOrder[0].x;
-        particlePos.y = this.guessOrder[0].y;
         this.guessOrder.shift();
         var random_file =
           audio_files[Math.floor(Math.random() * audio_files.length)];
@@ -145,7 +144,7 @@ startButton = document.getElementById("start-game-easy");
 startButton.onclick = function() {
   var buttons = document.getElementById("button-3");
   buttons.style.display = "none";
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  keyCanvas.ctx.clearRect(0, 0, keyCanvas.canvas.width, keyCanvas.canvas.height);
   setTimeout(() => {
     document.getElementById("chords").play();
     changingKeys = new Game(randHomeRow, 1200, 32);
@@ -156,7 +155,7 @@ startButtonMedium = document.getElementById("start-game-medium");
 startButtonMedium.onclick = function() {
   var buttons = document.getElementById("button-3");
   buttons.style.display = "none";
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  keyCanvas.ctx.clearRect(0, 0, keyCanvas.canvas.width, keyCanvas.canvas.height);
   setTimeout(() => {
     document.getElementById("chords").play();
     changingKeys = new Game(fullKeyboard, 1200, 32);
@@ -167,7 +166,7 @@ startButtonHard = document.getElementById("start-game-hard");
 startButtonHard.onclick = function() {
   var buttons = document.getElementById("button-3");
   buttons.style.display = "none";
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  keyCanvas.ctx.clearRect(0, 0, keyCanvas.canvas.width, keyCanvas.canvas.height);
   setTimeout(() => {
     document.getElementById("chords").play();
     changingKeys = new Game(fullKeyboard, 600, 64);
@@ -182,5 +181,7 @@ window.onkeydown = function(e) {
 };
 
 window.onload = function(){
+
+  keyCanvas = new Canvas;
 
 }
