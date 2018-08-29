@@ -73,7 +73,7 @@ class Game {
     for (var i = 0; i < this.popups; i++) {
       const letter = {};
       setTimeout(() => {
-        letter.x = Math.floor(Math.random() * 1340);
+        letter.x = Math.floor((Math.random() * 670)+360);
         letter.y = Math.floor(Math.random() * 100 + 200);
         letter.fontType = this.randFonts[
           Math.floor(Math.random() * this.randFonts.length)
@@ -117,7 +117,7 @@ class Game {
         this.correctAnswers.push(key.key);
         console.log(this.correctAnswers);
         keyCanvas.ctx.font = this.guessOrder[0].fontType;
-        keyCanvas.ctx.fillStyle = "#f5f5f5";
+        keyCanvas.ctx.fillStyle = "#32CD32";
         keyCanvas.ctx.fillText(
           this.guessOrder[0].value,
           this.guessOrder[0].x,
@@ -126,6 +126,14 @@ class Game {
           100
         );
         this.guessOrder.shift();
+        if (this.guessOrder.length == 0){
+          keyCanvas.ctx.clearRect(
+            0,
+            0,
+            keyCanvas.canvas.width,
+            keyCanvas.canvas.height
+          )
+        }
         if (this.difficulty.length < 20) {
 
           var random_file =
@@ -145,6 +153,82 @@ class Game {
     }
   }
 }
+// Musical Emoji Particle System //
+
+// let projectiles = [];
+// var musicSymbol = {
+//   projectiles: ['🎼', '🎹', '🎵', '🎶', '🎷']
+// }
+// function render(){
+//   setTimeout(render, 1000/60);
+//   ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
+
+//   //Generate New projectiles
+//   generateProjectiles();
+//   for(var projectile of projectiles){
+//       projectile.draw();
+//       projectile.move();
+//   }
+//   //Draw the exploseion animation
+//   drawSymbol({
+//       x: changingKeys.ctx.canvas.width/2,
+//       y: changingKeys.ctx.canvas.height/2,
+//       size: 100
+//   })
+// }
+// function generateProjectiles(){
+//   projectiles = projectiles.filter(function(e){
+//       return e.life >0
+//   })
+//   if(Math.random() < 0.075){
+//       projectiles.push(createProjectile())
+//   }
+//   return;
+// }
+
+// function createProjectile(){
+//   return {
+//     musicSymbol: musicSymbol.projectiles[Math.floor(musicSymbol.projectiles.length*Math.random())],
+//       size: Math.random()*25 + 25,
+//       seed : 4,
+//       direction: Math.floor(Math.random()*180)+180,
+//       angle: 0,
+//       x: ctx.canvas.width/2,
+//       y: ctx.canvas.height/2,
+//       spin: 0.01,
+//       life: 60,
+//       maxLife: 60,
+//       move: function(){
+//           this.life -= 1;
+//           var speed = Math.ceil(this.life/this.maxLife * this.seed);
+//           var toRadians = this.direction/180*3*Math.PI;
+//           this.x += speed * Math.cos(toRadians)
+//           this.y += speed * Math.sin(toRadians)
+//           this.angle += this.spin
+//       },
+//       draw: function(){
+//           drawEmoji({
+//               emoji: this.musicSymbol,
+//               x: this.x,
+//               y: this.y,
+//               size: this.size,
+//               angle: this.angle,
+//               alpha: this.life/this.maxLife
+//           })
+//       }
+//   }
+// }
+// function drawEmoji(info){
+//   changingKeys.ctx.font = info.size+"px Arial"
+//   changingKeys.ctx.textAlign='center';
+//   changingKeys.ctx.textBaseline='middle';
+//   changingKeys.ctx.save(); /// To restore the state later on using ctx.restore();
+//   changingKeys.ctx.globalAlpha = info.alpha || 1;
+//   changingKeys.ctx.translate(info.x, info.y);
+//   changingKeys.ctx.rotate(info.angle)
+//   changingKeys.ctx.fillText(info.emoji, 0,0);
+//   changingKeys.ctx.restore();
+  //restoring state
 
 // Difficulty Button Actions //
 
@@ -191,7 +275,7 @@ startButtonHard.onclick = function() {
     keyCanvas.canvas.height
   );
   setTimeout(() => {
-    document.getElementById("medium").play();
+    document.getElementById("hard").play();
     changingKeys = new Game(fullKeyboard, 600, 64);
     changingKeys.startGame();
   }, 100);
