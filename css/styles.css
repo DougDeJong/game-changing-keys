@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
+
 canvas {
   border: 1px solid black;
   background-image: url("../img/trebleClef.png");
@@ -39,7 +41,7 @@ body {
 	cursor:pointer;
   color:#ffffff;
   width: 20vw;
-	font-family:Arial;
+	font-family:Abril Fatface;
 	font-size:17px;
 	padding:16px 31px;
 	text-decoration:none;
@@ -49,6 +51,7 @@ body {
 .green-button:hover {
   background-color:#00ffcc;
   color: 	#696969;
+  letter-spacing: 3px;
 }
 .green-button:active {
 	position:relative;
