@@ -14,6 +14,8 @@ var mediumCorrect = "audio/mediumCorrect.wav"
 
 // canvas declarations //
 
+possibleY = [180,300,420,530];
+
 class Canvas {
   constructor() {
     this.canvas = document.querySelector("#canv");
@@ -74,7 +76,7 @@ class Game {
       const letter = {};
       setTimeout(() => {
         letter.x = Math.floor((Math.random() * 670)+360);
-        letter.y = Math.floor(Math.random() * 100 + 200);
+        letter.y = possibleY[Math.floor(Math.random() * possibleY.length)];
         letter.fontType = this.randFonts[
           Math.floor(Math.random() * this.randFonts.length)
         ];
@@ -95,12 +97,10 @@ class Game {
         alert("You WIN!");
         var buttons = document.getElementById("button-3");
         buttons.style.display = "flex";
-        document.getElementById("beats").stop();
       } else {
         alert("Better Luck Next Time");
         var buttons = document.getElementById("button-3");
         buttons.style.display = "flex";
-        document.getElementById("beats").stop();
       }
     }, 38400);
   }
@@ -236,6 +236,11 @@ startButton = document.getElementById("start-game-easy");
 startButton.onclick = function() {
   var buttons = document.getElementById("button-3");
   buttons.style.display = "none";
+  document.getElementById("medium").currentTime = 0.0;
+  document.getElementById("beat").pause();
+  document.getElementById("beat").currentTime = 0.0;
+  document.getElementById("hard").pause();
+  document.getElementById("hard").currentTime = 0.0;
   keyCanvas.ctx.clearRect(
     0,
     0,
@@ -252,6 +257,11 @@ startButtonMedium = document.getElementById("start-game-medium");
 startButtonMedium.onclick = function() {
   var buttons = document.getElementById("button-3");
   buttons.style.display = "none";
+  document.getElementById("medium").currentTime = 0.0;
+  document.getElementById("beat").pause();
+  document.getElementById("beat").currentTime = 0.0;
+  document.getElementById("hard").pause();
+  document.getElementById("hard").currentTime = 0.0;
   keyCanvas.ctx.clearRect(
     0,
     0,
@@ -268,6 +278,13 @@ startButtonHard = document.getElementById("start-game-hard");
 startButtonHard.onclick = function() {
   var buttons = document.getElementById("button-3");
   buttons.style.display = "none";
+  document.getElementById("medium").pause();
+  document.getElementById("medium").currentTime = 0.0;
+  document.getElementById("beat").pause();
+  document.getElementById("beat").currentTime = 0.0;
+  document.getElementById("hard").pause();
+  document.getElementById("hard").currentTime = 0.0;
+
   keyCanvas.ctx.clearRect(
     0,
     0,
