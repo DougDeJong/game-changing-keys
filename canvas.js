@@ -3,7 +3,7 @@
 console.log(document.getElementById("chords"));
 var audio_files = [
   "audio/plucks/C pluck.wav",
-  "audio/plucks/D pluck.wav",
+  "audio/plucks/Eb pluck.wav",
   "audio/plucks/F pluck.wav",
   "audio/plucks/G pluck.wav",
   "audio/plucks/Bb pluck.wav",
