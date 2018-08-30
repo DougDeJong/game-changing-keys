@@ -60,6 +60,10 @@ let fullKeyboard = [
   "/",
   ";"
 ];
+
+var checkInt;
+var popInt;
+
 // Game Constructor Function //
 class Game {
   constructor(difficultyArray, interval, amount) {
@@ -74,7 +78,7 @@ class Game {
   startGame() {
     for (var i = 0; i < this.popups; i++) {
       const letter = {};
-      setTimeout(() => {
+      popInt = setTimeout(() => {
         letter.x = Math.floor((Math.random() * 670)+360);
         letter.y = possibleY[Math.floor(Math.random() * possibleY.length)];
         letter.fontType = this.randFonts[
@@ -90,7 +94,8 @@ class Game {
         keyCanvas.ctx.font = letter.fontType;
         keyCanvas.ctx.fillStyle = "#ff0000";
         keyCanvas.ctx.fillText(letter.value, letter.x, letter.y, 100, 100);
-      }, this.popInterval * i);
+
+        }, this.popInterval * i);
     }
     setTimeout(() => {
       if (this.eventTracker.length === this.correctAnswers.length) {
@@ -103,7 +108,22 @@ class Game {
         buttons.style.display = "flex";
       }
     }, 38400);
-  }
+    // for (var i = 0; i < 384; i++){
+    checkInt = setInterval(() => {
+        if (this.guessOrder.length > 7) {
+          alert("Better Luck Next Time");
+          var buttons = document.getElementById("button-3");
+          buttons.style.display = "flex";
+          
+
+          clearInterval(checkInt);
+          window.location.reload(true);
+
+
+      }
+      }, 1000);
+  // }
+    }
   pressKey(key) {
     if (
       (key.keyCode >= 65 && key.keyCode <= 90) ||
@@ -150,85 +170,15 @@ class Game {
       }
     } else {
       console.log("not a valid input");
+      // if (this.guessOrder.length > 7) {
+      //   alert("Better Luck Next Time");
+      //   var buttons = document.getElementById("button-3");
+      //   buttons.style.display = "flex";
+      
+      };
     }
   }
-}
-// Musical Emoji Particle System //
 
-// let projectiles = [];
-// var musicSymbol = {
-//   projectiles: ['🎼', '🎹', '🎵', '🎶', '🎷']
-// }
-// function render(){
-//   setTimeout(render, 1000/60);
-//   ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
-
-//   //Generate New projectiles
-//   generateProjectiles();
-//   for(var projectile of projectiles){
-//       projectile.draw();
-//       projectile.move();
-//   }
-//   //Draw the exploseion animation
-//   drawSymbol({
-//       x: changingKeys.ctx.canvas.width/2,
-//       y: changingKeys.ctx.canvas.height/2,
-//       size: 100
-//   })
-// }
-// function generateProjectiles(){
-//   projectiles = projectiles.filter(function(e){
-//       return e.life >0
-//   })
-//   if(Math.random() < 0.075){
-//       projectiles.push(createProjectile())
-//   }
-//   return;
-// }
-
-// function createProjectile(){
-//   return {
-//     musicSymbol: musicSymbol.projectiles[Math.floor(musicSymbol.projectiles.length*Math.random())],
-//       size: Math.random()*25 + 25,
-//       seed : 4,
-//       direction: Math.floor(Math.random()*180)+180,
-//       angle: 0,
-//       x: ctx.canvas.width/2,
-//       y: ctx.canvas.height/2,
-//       spin: 0.01,
-//       life: 60,
-//       maxLife: 60,
-//       move: function(){
-//           this.life -= 1;
-//           var speed = Math.ceil(this.life/this.maxLife * this.seed);
-//           var toRadians = this.direction/180*3*Math.PI;
-//           this.x += speed * Math.cos(toRadians)
-//           this.y += speed * Math.sin(toRadians)
-//           this.angle += this.spin
-//       },
-//       draw: function(){
-//           drawEmoji({
-//               emoji: this.musicSymbol,
-//               x: this.x,
-//               y: this.y,
-//               size: this.size,
-//               angle: this.angle,
-//               alpha: this.life/this.maxLife
-//           })
-//       }
-//   }
-// }
-// function drawEmoji(info){
-//   changingKeys.ctx.font = info.size+"px Arial"
-//   changingKeys.ctx.textAlign='center';
-//   changingKeys.ctx.textBaseline='middle';
-//   changingKeys.ctx.save(); /// To restore the state later on using ctx.restore();
-//   changingKeys.ctx.globalAlpha = info.alpha || 1;
-//   changingKeys.ctx.translate(info.x, info.y);
-//   changingKeys.ctx.rotate(info.angle)
-//   changingKeys.ctx.fillText(info.emoji, 0,0);
-//   changingKeys.ctx.restore();
-  //restoring state
 
 // Difficulty Button Actions //
 
