@@ -1,3 +1,7 @@
+// Project Completed and Presentation Done //
+
+
+
 // audio arrays and effects declarations //
 
 console.log(document.getElementById("chords"));
@@ -9,12 +13,11 @@ var audio_files = [
   "audio/plucks/Bb pluck.wav",
   "audio/plucks/C pluck.wav"
 ];
-var mediumCorrect = "audio/mediumCorrect.wav"
-
+var mediumCorrect = "audio/mediumCorrect.wav";
 
 // canvas declarations //
 
-possibleY = [180,300,420,530];
+possibleY = [180, 300, 420, 530];
 
 class Canvas {
   constructor() {
@@ -79,7 +82,7 @@ class Game {
     for (var i = 0; i < this.popups; i++) {
       const letter = {};
       popInt = setTimeout(() => {
-        letter.x = Math.floor((Math.random() * 670)+360);
+        letter.x = Math.floor(Math.random() * 670 + 360);
         letter.y = possibleY[Math.floor(Math.random() * possibleY.length)];
         letter.fontType = this.randFonts[
           Math.floor(Math.random() * this.randFonts.length)
@@ -94,8 +97,7 @@ class Game {
         keyCanvas.ctx.font = letter.fontType;
         keyCanvas.ctx.fillStyle = "#ff0000";
         keyCanvas.ctx.fillText(letter.value, letter.x, letter.y, 100, 100);
-
-        }, this.popInterval * i);
+      }, this.popInterval * i);
     }
     setTimeout(() => {
       if (this.eventTracker.length === this.correctAnswers.length) {
@@ -110,20 +112,17 @@ class Game {
     }, 38400);
     // for (var i = 0; i < 384; i++){
     checkInt = setInterval(() => {
-        if (this.guessOrder.length > 7) {
-          alert("Better Luck Next Time");
-          var buttons = document.getElementById("button-3");
-          buttons.style.display = "flex";
-          
+      if (this.guessOrder.length > 7) {
+        alert("Better Luck Next Time");
+        var buttons = document.getElementById("button-3");
+        buttons.style.display = "flex";
 
-          clearInterval(checkInt);
-          window.location.reload(true);
-
-
+        clearInterval(checkInt);
+        window.location.reload(true);
       }
-      }, 1000);
-  // }
-    }
+    }, 1000);
+    // }
+  }
   pressKey(key) {
     if (
       (key.keyCode >= 65 && key.keyCode <= 90) ||
@@ -146,24 +145,22 @@ class Game {
           100
         );
         this.guessOrder.shift();
-        if (this.guessOrder.length == 0){
+        if (this.guessOrder.length == 0) {
           keyCanvas.ctx.clearRect(
             0,
             0,
             keyCanvas.canvas.width,
             keyCanvas.canvas.height
-          )
+          );
         }
         if (this.difficulty.length < 20) {
-
           var random_file =
             audio_files[Math.floor(Math.random() * audio_files.length)];
-  
+
           var pluck = new Audio(random_file);
-  
+
           pluck.play();
-        }
-        else {
+        } else {
           var hats = new Audio(mediumCorrect);
           hats.play();
         }
@@ -174,11 +171,9 @@ class Game {
       //   alert("Better Luck Next Time");
       //   var buttons = document.getElementById("button-3");
       //   buttons.style.display = "flex";
-      
-      };
     }
   }
-
+}
 
 // Difficulty Button Actions //
 
@@ -257,4 +252,3 @@ window.onkeydown = function(e) {
 window.onload = function() {
   keyCanvas = new Canvas();
 };
-
